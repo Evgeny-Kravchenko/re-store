@@ -1,9 +1,13 @@
-import React from 'react';
-
-import ErrorIndicator from '../error-indicator';
+import React, { FC } from 'react';
 
 import './App.scss';
 
-const App: React.FC = () => <ErrorIndicator />;
+import ErrorBoundry from '../error-boundry';
+
+const App: FC = () => (
+  <ErrorBoundry>
+    <h1>Hello World</h1>
+  </ErrorBoundry>
+);
 
 export default App;
