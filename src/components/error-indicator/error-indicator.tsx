@@ -1,10 +1,10 @@
-import React from 'react';
+import React, { FC } from 'react';
 
 import icon from './error.png';
 
 import './error-indicator.scss';
 
-const ErrorIndicator: React.FC = () => (
+const ErrorIndicator: FC = () => (
   <div className="error-indicator alert alert-danger">
     <img className="error-indicator__icon icon" src={icon} alt="Error" />
     <strong className="error-indicator__title title">
