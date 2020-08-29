@@ -1,6 +1,9 @@
 import { hot } from 'react-hot-loader/root';
 import React from 'react';
 import ReactDOM from 'react-dom';
+
+import './styles/index.scss';
+
 import App from './components/app';
 
 const AppWithHot = hot(App);
