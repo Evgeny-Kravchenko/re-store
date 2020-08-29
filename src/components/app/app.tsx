@@ -1,6 +1,6 @@
 import React, { FC } from 'react';
 
-import './App.scss';
+import './app.scss';
 
 import ErrorBoundry from '../error-boundry';
 
