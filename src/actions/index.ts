@@ -1,6 +1,6 @@
-import { IState, IAction } from '../interfaces';
+import { IAction, IBook } from '../interfaces';
 
-const booksLoaded = (newBooks: IState): IAction => {
+const booksLoaded = (newBooks: IBook): IAction => {
   return {
     type: 'BOOKS_LOADED',
     payload: newBooks,

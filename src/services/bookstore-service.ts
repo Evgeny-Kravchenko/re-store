@@ -1,9 +1,11 @@
-export interface IBookStoreService {
-  getBooks: () => Array<number>;
-}
+import { IBookStoreService, IBook } from '../interfaces';
 
-export class BookstoreService implements IBookStoreService {
-  getBooks(): Array<number> {
-    return [];
+export default class BookstoreService implements IBookStoreService {
+  getBooks(): Array<IBook> {
+    return [
+      { name: 'Big book CSS', id: 1 },
+      { name: 'Decide algorithms', id: 2 },
+      { name: `You don't know JS `, id: 3 },
+    ];
   }
 }

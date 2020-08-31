@@ -1,20 +1,18 @@
-import React, { FC } from 'react';
-import { BookstoreService } from '../../services';
+import React, { ComponentType } from 'react';
+import withBookStoreService from '../hoc';
+
+import { IPropsApp } from '../../interfaces';
 
 import './app.scss';
 
-import ErrorBoundry from '../error-boundry';
-import { BookStoreServiceProvider } from '../bookstore-service-context';
-
-const App: FC = () => {
-  const bookstoreService: BookstoreService = new BookstoreService();
+const App: ComponentType<IPropsApp> = (props: IPropsApp) => {
+  const { bookStoreService } = props;
   return (
-    <BookStoreServiceProvider value={bookstoreService}>
-      <ErrorBoundry>
-        <h1>Hello World</h1>
-      </ErrorBoundry>
-    </BookStoreServiceProvider>
+    <>
+      {bookStoreService &&
+        bookStoreService.getBooks().map((item) => <h1 key={item.id}>{item.name}</h1>)}
+    </>
   );
 };
 
-export default App;
+export default withBookStoreService()(App);

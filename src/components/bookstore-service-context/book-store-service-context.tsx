@@ -1,5 +1,5 @@
 import React from 'react';
-import { BookstoreService } from '../../services';
+import BookstoreService from '../../services';
 
 const bookstoreService: BookstoreService = new BookstoreService();
 

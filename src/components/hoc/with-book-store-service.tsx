@@ -1,19 +1,20 @@
-import React, { ComponentClass, ReactNode } from 'react';
+import React, { ReactNode, ComponentType } from 'react';
 
 import { BookStoreServiceConsumer } from '../bookstore-service-context';
-import { BookstoreService } from '../../services';
+import { IBookStoreService } from '../../interfaces';
 
-const withBookStoreService = () => (Wrapped: ComponentClass) => {
-  const ComponentWithService = <T extends unknown>(props: T) => {
-    return (
-      <BookStoreServiceConsumer>
-        {(bookStoreService: BookstoreService): ReactNode => {
-          return <Wrapped {...props} bookStoreService={bookStoreService} />;
-        }}
-      </BookStoreServiceConsumer>
-    );
+const withBookStoreService = () =>
+  function <P>(Wrapped: ComponentType<P>): ComponentType<P> {
+    const ComponentWithService: ComponentType<P> = (props: P) => {
+      return (
+        <BookStoreServiceConsumer>
+          {(bookStoreService: IBookStoreService): ReactNode => {
+            return <Wrapped {...props} bookStoreService={bookStoreService} />;
+          }}
+        </BookStoreServiceConsumer>
+      );
+    };
+    return ComponentWithService;
   };
-  return ComponentWithService;
-};
 
 export default withBookStoreService;

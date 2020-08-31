@@ -1,3 +1,5 @@
+import IBook from './book.interface';
+
 export default interface IState {
-  books: [];
+  books: Array<IBook>;
 }
