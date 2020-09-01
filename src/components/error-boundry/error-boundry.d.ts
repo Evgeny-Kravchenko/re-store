@@ -1,10 +1,7 @@
 import { Component, ReactNode } from 'react';
-interface IState {
-  isError: boolean;
-}
+import { IErrorBoundryState } from '../../interfaces';
 export default class ErrorBoundry extends Component {
-  state: IState;
-  componentDidCatch(): void;
-  render(): ReactNode;
+    state: IErrorBoundryState;
+    componentDidCatch(): void;
+    render(): ReactNode;
 }
-export {};

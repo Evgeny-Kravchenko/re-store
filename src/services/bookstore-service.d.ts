@@ -1,6 +1,4 @@
-export interface IBookStoreService {
-  getBooks: () => Array<number>;
-}
-export declare class BookstoreService implements IBookStoreService {
-  getBooks(): Array<number>;
+import { IBookStoreService, IBook } from '../interfaces';
+export default class BookstoreService implements IBookStoreService {
+    getBooks(): Array<IBook>;
 }

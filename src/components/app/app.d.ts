@@ -1,4 +1,5 @@
-import { FC } from 'react';
+import { ComponentType } from 'react';
+import { IBookstoreServiceProp } from '../../interfaces';
 import './app.scss';
-declare const App: FC;
+declare const App: ComponentType<IBookstoreServiceProp>;
 export default App;

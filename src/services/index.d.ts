@@ -1,2 +1,2 @@
-import { BookstoreService, IBookStoreService } from './bookstore-service';
-export { BookstoreService, IBookStoreService };
+import BookstoreService from './bookstore-service';
+export default BookstoreService;
