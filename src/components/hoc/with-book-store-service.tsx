@@ -1,4 +1,4 @@
-import React, { ReactNode, ComponentType } from 'react';
+import React, { ComponentType, ReactElement } from 'react';
 
 import { BookStoreServiceConsumer } from '../bookstore-service-context';
 import { IBookStoreService } from '../../interfaces';
@@ -8,7 +8,7 @@ const withBookStoreService = () =>
     const ComponentWithService: ComponentType<P> = (props: P) => {
       return (
         <BookStoreServiceConsumer>
-          {(bookStoreService: IBookStoreService): ReactNode => {
+          {(bookStoreService: IBookStoreService): ReactElement => {
             return <Wrapped {...props} bookStoreService={bookStoreService} />;
           }}
         </BookStoreServiceConsumer>

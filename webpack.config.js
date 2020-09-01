@@ -65,6 +65,7 @@ module.exports = (opts) => {
     },
     devServer: {
       contentBase: path.join(__dirname, 'dist'),
+      historyApiFallback: true,
     },
     plugins: ((plugins) => {
       if (!isDev) {

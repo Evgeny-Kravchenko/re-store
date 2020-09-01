@@ -1,5 +1,5 @@
 import IBook from './book.interface';
 
 export default interface IState {
-  books: Array<IBook>;
+  books: Array<IBook | undefined>;
 }

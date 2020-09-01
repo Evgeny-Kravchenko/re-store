@@ -1,5 +1,5 @@
 import { IBookStoreService } from '../interfaces';
 
-export default interface IPropsApp {
+export default interface IBookstoreServiceProp {
   bookStoreService?: IBookStoreService;
 }
