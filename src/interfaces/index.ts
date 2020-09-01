@@ -4,5 +4,14 @@ import IAction from './action.interface';
 import IBook from './book.interface';
 import IBookStoreService from './bookstore-service.interface';
 import IBookstoreServiceProp from './with-bookservice-prop.interface';
+import IBookListItemProps from './book-list-item.interface';
 
-export { IErrorBoundryState, IState, IAction, IBook, IBookStoreService, IBookstoreServiceProp };
+export {
+  IErrorBoundryState,
+  IState,
+  IAction,
+  IBook,
+  IBookStoreService,
+  IBookstoreServiceProp,
+  IBookListItemProps,
+};

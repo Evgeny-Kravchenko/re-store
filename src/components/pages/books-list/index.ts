@@ -1,3 +1,3 @@
-import BooksListPage from './books-list';
+import BooksListPage from './books-list.page';
 
 export default BooksListPage;
