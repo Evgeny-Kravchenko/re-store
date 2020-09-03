@@ -13,7 +13,7 @@ const App: ComponentType<IBookstoreServiceProp> = () => {
   return (
     <div className="app">
       <Header numberItems={5} total={210} />
-      <main role="main" className="container">
+      <main role="main" className="wrapper">
         <Switch>
           <Route
             path="/"
