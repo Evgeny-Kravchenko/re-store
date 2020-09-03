@@ -35,11 +35,11 @@ class BookList extends Component<IState & IBookstoreServiceProp & IBookLoaded> {
   public render(): ReactElement {
     const { books }: { books: Array<IBook | undefined> } = this.props;
     return (
-      <ul>
+      <ul className="book-list">
         {books.map((book: IBook | undefined) => {
           if (book) {
             return (
-              <li key={book.id}>
+              <li key={book.id} className="book-list__item">
                 <BookListItem book={book} />
               </li>
             );

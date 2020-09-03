@@ -1,0 +1,8 @@
+a {
+  transition: 0.2s;
+
+  &:hover {
+    text-decoration: none;
+    cursor: pointer;
+  }
+}

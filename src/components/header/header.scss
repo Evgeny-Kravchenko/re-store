@@ -1,0 +1,40 @@
+.header {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+  border-bottom: 1px solid #e5e5e5;
+
+  &__title {
+    font-family: 'Playfair Display', 'Georgia', serif;
+    font-size: 2.5rem;
+    padding-left: 1rem;
+  }
+
+  &__shopping-cart {
+    align-self: center;
+    padding-right: 1rem;
+  }
+}
+
+.shopping-cart {
+  font-size: 1.3rem;
+
+  &__cart-icon {
+    font-size: 2.2rem;
+    color: cadetblue;
+    margin-right: 10px;
+  }
+}
+
+.navigation {
+  display: flex;
+  justify-content: space-between;
+  align-items: stretch;
+
+  &__item {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+  }
+}
