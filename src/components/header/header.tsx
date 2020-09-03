@@ -13,7 +13,7 @@ const Header: ComponentType<IHeaderProps> = (props: IHeaderProps): ReactElement 
   return (
     <header className="header">
       <a className="header__title text-dark">Re store</a>
-      <nav className="navigation">
+      <nav className="navigation header__navigation">
         <div className="navigation__item">
           <Link to="/">Home</Link>
         </div>

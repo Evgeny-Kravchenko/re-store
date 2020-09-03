@@ -4,16 +4,23 @@
   justify-content: space-between;
   margin-bottom: 1rem;
   border-bottom: 1px solid #e5e5e5;
+  font-family: 'PT Serif', serif;
 
   &__title {
     font-family: 'Playfair Display', 'Georgia', serif;
     font-size: 2.5rem;
     padding-left: 1rem;
+    order: 1;
+  }
+
+  &__navigation {
+    order: 2;
   }
 
   &__shopping-cart {
     align-self: center;
     padding-right: 1rem;
+    order: 3;
   }
 }
 
@@ -36,5 +43,42 @@
     display: flex;
     align-items: center;
     padding: 10px;
+    font-size: 1.2rem;
+  }
+}
+
+@media screen and (max-width: 800px) {
+  .header {
+    &__navigation {
+      width: 100%;
+      justify-content: space-around;
+      order: 3;
+    }
+
+    &__shopping-cart {
+      order: 2;
+    }
+  }
+}
+
+@media screen and (max-width: 500px) {
+  .header {
+    &__title {
+      font-size: 2rem;
+    }
+  }
+
+  .shopping-cart {
+    font-size: 1rem;
+
+    &__cart-icon {
+      font-size: 1.5rem;
+    }
+  }
+
+  .navigation {
+    &__item {
+      font-size: 1rem;
+    }
   }
 }
