@@ -7,4 +7,10 @@ const booksLoaded = (newBooks: Array<IBook>): IAction => {
   };
 };
 
-export { booksLoaded };
+const booksRequested = (): IAction => {
+  return {
+    type: 'BOOKS_REQUESTED',
+  };
+};
+
+export { booksLoaded, booksRequested };

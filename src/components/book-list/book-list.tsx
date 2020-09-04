@@ -16,7 +16,7 @@ import BookListItem from '../book-list-item';
 import Spinner from '../spinner';
 
 //Actions
-import { booksLoaded } from '../../actions';
+import { booksLoaded, booksRequested } from '../../actions';
 
 import './book-list.scss';
 
@@ -24,12 +24,19 @@ interface IBookLoaded {
   booksLoaded: (newBooks: Array<IBook>) => void;
 }
 
-class BookList extends Component<IState & IBookstoreServiceProp & IBookLoaded> {
+interface IBookRequested {
+  booksRequested: () => void;
+}
+
+type Props = IState & IBookstoreServiceProp & IBookLoaded & IBookRequested;
+
+class BookList extends Component<Props> {
   public componentDidMount(): void {
-    const { bookStoreService } = this.props;
+    const { bookStoreService, booksLoaded, booksRequested } = this.props;
     if (bookStoreService) {
+      booksRequested();
       bookStoreService.getBooks().then((data) => {
-        this.props.booksLoaded(data);
+        booksLoaded(data);
       });
     }
   }
@@ -60,7 +67,7 @@ const mapStateToProps = ({ books, loading }: { books: Array<IBook>; loading: boo
   loading,
 });
 
-const mapDispatchToProps = { booksLoaded };
+const mapDispatchToProps = { booksLoaded, booksRequested };
 
 export default compose<ComponentType>(
   withBookStoreService(),

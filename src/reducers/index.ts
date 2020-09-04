@@ -13,6 +13,12 @@ const reducer = (state: IState = initialState, action: IAction): IState => {
         loading: false,
       };
     }
+    case 'BOOKS_REQUESTED': {
+      return {
+        books: [],
+        loading: true,
+      };
+    }
     default: {
       return state;
     }
