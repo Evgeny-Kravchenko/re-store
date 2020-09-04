@@ -13,6 +13,7 @@ import { IBookstoreServiceProp } from '../../interfaces';
 
 // Components
 import BookListItem from '../book-list-item';
+import Spinner from '../spinner';
 
 //Actions
 import { booksLoaded } from '../../actions';
@@ -27,13 +28,17 @@ class BookList extends Component<IState & IBookstoreServiceProp & IBookLoaded> {
   public componentDidMount(): void {
     const { bookStoreService } = this.props;
     if (bookStoreService) {
-      const data = bookStoreService.getBooks();
-      this.props.booksLoaded(data);
+      bookStoreService.getBooks().then((data) => {
+        this.props.booksLoaded(data);
+      });
     }
   }
 
   public render(): ReactElement {
-    const { books }: { books: Array<IBook | undefined> } = this.props;
+    const { books, loading }: { books: Array<IBook | undefined>; loading: boolean } = this.props;
+    if (loading) {
+      return <Spinner />;
+    }
     return (
       <ul className="book-list">
         {books.map((book: IBook | undefined) => {
@@ -50,7 +55,10 @@ class BookList extends Component<IState & IBookstoreServiceProp & IBookLoaded> {
   }
 }
 
-const mapStateToProps = (state: IState) => ({ books: state.books });
+const mapStateToProps = ({ books, loading }: { books: Array<IBook>; loading: boolean }) => ({
+  books,
+  loading,
+});
 
 const mapDispatchToProps = { booksLoaded };
 
