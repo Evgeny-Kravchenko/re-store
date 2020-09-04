@@ -12,7 +12,9 @@ const Header: ComponentType<IHeaderProps> = (props: IHeaderProps): ReactElement 
   const { numberItems, total }: { numberItems: number; total: number } = props;
   return (
     <header className="header">
-      <a className="header__title text-dark">Re store</a>
+      <Link to="/" className="header__title text-dark">
+        Re store
+      </Link>
       <nav className="navigation header__navigation">
         <div className="navigation__item">
           <Link to="/">Home</Link>
@@ -20,14 +22,11 @@ const Header: ComponentType<IHeaderProps> = (props: IHeaderProps): ReactElement 
         <div className="navigation__item">
           <Link to="books-list">Books list</Link>
         </div>
-        <div className="navigation__item">
-          <Link to="orders-details">Order details</Link>
-        </div>
       </nav>
-      <a className="header__shopping-cart shopping-cart" href="#">
+      <Link to="orders-details" className="header__shopping-cart shopping-cart" href="#">
         <i className="shopping-cart__cart-icon fa fa-shopping-cart"></i>
         {numberItems} items ({total})
-      </a>
+      </Link>
     </header>
   );
 };

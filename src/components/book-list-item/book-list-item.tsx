@@ -18,9 +18,7 @@ const BookListItem: FC<IBookListItemProps> = (props: IBookListItemProps): ReactE
         <img src={coverImage} alt={name} />
       </div>
       <div className="book-list-item__details">
-        <a href="#" className="book-list-item__title">
-          {name}
-        </a>
+        <span className="book-list-item__title">{name}</span>
         <div className="book-list-item__author">{author}</div>
         <div className="book-list-item__price">{price}</div>
         <button type="button" className="btn btn-info">

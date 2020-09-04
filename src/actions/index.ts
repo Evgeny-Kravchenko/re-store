@@ -7,4 +7,17 @@ const booksLoaded = (newBooks: Array<IBook>): IAction => {
   };
 };
 
-export { booksLoaded };
+const booksRequested = (): IAction => {
+  return {
+    type: 'BOOKS_REQUESTED',
+  };
+};
+
+const booksError = (error: Error): IAction => {
+  return {
+    type: 'BOOKS_ERROR',
+    payload: error,
+  };
+};
+
+export { booksLoaded, booksRequested, booksError };
