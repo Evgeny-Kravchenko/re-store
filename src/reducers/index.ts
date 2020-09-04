@@ -3,6 +3,7 @@ import { IState, IAction } from '../interfaces';
 const initialState: IState = {
   books: [],
   loading: true,
+  error: null,
 };
 
 const reducer = (state: IState = initialState, action: IAction): IState => {
@@ -11,12 +12,21 @@ const reducer = (state: IState = initialState, action: IAction): IState => {
       return {
         books: action.payload,
         loading: false,
+        error: null,
       };
     }
     case 'BOOKS_REQUESTED': {
       return {
         books: [],
         loading: true,
+        error: null,
+      };
+    }
+    case 'BOOKS_ERROR': {
+      return {
+        books: [],
+        loading: false,
+        error: action.payload,
       };
     }
     default: {

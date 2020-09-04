@@ -16,9 +16,10 @@ import BookListItem from '../book-list-item';
 import Spinner from '../spinner';
 
 //Actions
-import { booksLoaded, booksRequested } from '../../actions';
+import { booksLoaded, booksRequested, booksError } from '../../actions';
 
 import './book-list.scss';
+import ErrorIndicator from '../error-indicator';
 
 interface IBookLoaded {
   booksLoaded: (newBooks: Array<IBook>) => void;
@@ -28,23 +29,37 @@ interface IBookRequested {
   booksRequested: () => void;
 }
 
-type Props = IState & IBookstoreServiceProp & IBookLoaded & IBookRequested;
+interface IBookError {
+  booksError: (err: Error) => void;
+}
+
+type Props = IState & IBookstoreServiceProp & IBookLoaded & IBookRequested & IBookError;
 
 class BookList extends Component<Props> {
   public componentDidMount(): void {
-    const { bookStoreService, booksLoaded, booksRequested } = this.props;
+    const { bookStoreService, booksLoaded, booksRequested, booksError } = this.props;
     if (bookStoreService) {
       booksRequested();
-      bookStoreService.getBooks().then((data) => {
-        booksLoaded(data);
-      });
+      bookStoreService
+        .getBooks()
+        .then((data) => {
+          booksLoaded(data);
+        })
+        .catch((err: Error) => booksError(err));
     }
   }
 
   public render(): ReactElement {
-    const { books, loading }: { books: Array<IBook | undefined>; loading: boolean } = this.props;
+    const {
+      books,
+      loading,
+      error,
+    }: { books: Array<IBook | undefined>; loading: boolean; error: null | Error } = this.props;
     if (loading) {
       return <Spinner />;
+    }
+    if (error) {
+      return <ErrorIndicator />;
     }
     return (
       <ul className="book-list">
@@ -62,12 +77,21 @@ class BookList extends Component<Props> {
   }
 }
 
-const mapStateToProps = ({ books, loading }: { books: Array<IBook>; loading: boolean }) => ({
+const mapStateToProps = ({
   books,
   loading,
+  error,
+}: {
+  books: Array<IBook>;
+  loading: boolean;
+  error: null | Error;
+}) => ({
+  books,
+  loading,
+  error,
 });
 
-const mapDispatchToProps = { booksLoaded, booksRequested };
+const mapDispatchToProps = { booksLoaded, booksRequested, booksError };
 
 export default compose<ComponentType>(
   withBookStoreService(),

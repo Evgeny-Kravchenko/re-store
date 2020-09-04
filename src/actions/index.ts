@@ -13,4 +13,11 @@ const booksRequested = (): IAction => {
   };
 };
 
-export { booksLoaded, booksRequested };
+const booksError = (error: Error): IAction => {
+  return {
+    type: 'BOOKS_ERROR',
+    payload: error,
+  };
+};
+
+export { booksLoaded, booksRequested, booksError };
