@@ -21,6 +21,13 @@ const booksError = (error: Error): IAction => {
   };
 };
 
+const bookAddedToCart = (bookId: number): IAction => {
+  return {
+    type: 'BOOK_ADDED_TO_CART',
+    payload: bookId,
+  };
+};
+
 const fetchBooks = (
   bookStoreService: IBookStoreService | undefined,
   dispatch: (action: IAction) => IAction
@@ -34,4 +41,4 @@ const fetchBooks = (
   }
 };
 
-export { booksLoaded, booksRequested, booksError, fetchBooks };
+export { booksLoaded, booksRequested, booksError, fetchBooks, bookAddedToCart };

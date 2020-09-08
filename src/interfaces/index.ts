@@ -5,6 +5,8 @@ import IBook from './book.interface';
 import IBookStoreService from './bookstore-service.interface';
 import IBookstoreServiceProp from './with-bookservice-prop.interface';
 import IBookListItemProps from './book-list-item.interface';
+import IShoppingCartItem from './shopping-cart-item.interface';
+import IPropsShoppingCartTable from './shopping-cart-table-props';
 
 export {
   IErrorBoundryState,
@@ -14,4 +16,6 @@ export {
   IBookStoreService,
   IBookstoreServiceProp,
   IBookListItemProps,
+  IShoppingCartItem,
+  IPropsShoppingCartTable,
 };
