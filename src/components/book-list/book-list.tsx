@@ -16,7 +16,7 @@ import BookListItem from '../book-list-item';
 import Spinner from '../spinner';
 
 //Actions
-import { booksLoaded, booksRequested, booksError } from '../../actions';
+import { fetchBooks } from '../../actions';
 
 import './book-list.scss';
 import ErrorIndicator from '../error-indicator';
@@ -82,15 +82,7 @@ const mapDispatchToProps = (
 ) => {
   const { bookStoreService } = ownProps;
   return {
-    fetchBooks: (): void => {
-      dispatch(booksRequested());
-      if (bookStoreService) {
-        bookStoreService
-          .getBooks()
-          .then((data: Array<IBook>) => dispatch(booksLoaded(data)))
-          .catch((error: Error) => booksError(error));
-      }
-    },
+    fetchBooks: fetchBooks(bookStoreService, dispatch),
   };
 };
 
