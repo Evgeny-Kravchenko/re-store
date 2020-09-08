@@ -1,8 +1,40 @@
 import React, { ComponentType, ReactElement } from 'react';
+import { connect } from 'react-redux';
 
 import './shopping-cart-table.scss';
+import { IShoppingCartItem, IPropsShoppingCartTable } from '../../interfaces';
 
-const ShoppingCartTable: ComponentType = (): ReactElement => {
+const ShoppingCartTable: ComponentType<IPropsShoppingCartTable> = (
+  props: IPropsShoppingCartTable
+): ReactElement => {
+  const { items, total, onIncrease, onDecrease, onDelete } = props;
+  const renderRow = (item: IShoppingCartItem, idx: number) => {
+    const {
+      id,
+      title,
+      count,
+      total,
+    }: { id: number; title: string; count: number; total: number } = item;
+    return (
+      <tr key={id}>
+        <td scope="col">{idx + 1}</td>
+        <td scope="col">{title}</td>
+        <td scope="col">{count}</td>
+        <td scope="col">{total}</td>
+        <td scope="col">
+          <button className="btn btn-outline-danger" onClick={() => onDelete(id)}>
+            <i className="fa fa-trash-o"></i>
+          </button>
+          <button className="btn btn-outline-success" onClick={() => onIncrease(id)}>
+            <i className="fa fa-plus-circle"></i>
+          </button>
+          <button className="btn btn-outline-warning" onClick={() => onDecrease(id)}>
+            <i className="fa fa-minus-circle"></i>
+          </button>
+        </td>
+      </tr>
+    );
+  };
   return (
     <>
       <table className="table table-hover shopping-cart-table">
@@ -16,62 +48,41 @@ const ShoppingCartTable: ComponentType = (): ReactElement => {
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <td scope="col">1</td>
-            <td scope="col">You don&apos;t know CSS</td>
-            <td scope="col">2</td>
-            <td scope="col">400$</td>
-            <td scope="col">
-              <button className="btn btn-outline-danger">
-                <i className="fa fa-trash-o"></i>
-              </button>
-              <button className="btn btn-outline-success">
-                <i className="fa fa-plus-circle"></i>
-              </button>
-              <button className="btn btn-outline-warning">
-                <i className="fa fa-minus-circle"></i>
-              </button>
-            </td>
-          </tr>
-          <tr>
-            <td scope="col">1</td>
-            <td scope="col">You don&apos;t know CSS</td>
-            <td scope="col">2</td>
-            <td scope="col">400$</td>
-            <td scope="col">
-              <button className="btn btn-outline-danger">
-                <i className="fa fa-trash-o"></i>
-              </button>
-              <button className="btn btn-outline-success">
-                <i className="fa fa-plus-circle"></i>
-              </button>
-              <button className="btn btn-outline-warning">
-                <i className="fa fa-minus-circle"></i>
-              </button>
-            </td>
-          </tr>
-          <tr>
-            <td scope="col">1</td>
-            <td scope="col">You don&apos;t know CSS</td>
-            <td scope="col">2</td>
-            <td scope="col">400$</td>
-            <td scope="col">
-              <button className="btn btn-outline-danger">
-                <i className="fa fa-trash-o"></i>
-              </button>
-              <button className="btn btn-outline-success">
-                <i className="fa fa-plus-circle"></i>
-              </button>
-              <button className="btn btn-outline-warning">
-                <i className="fa fa-minus-circle"></i>
-              </button>
-            </td>
-          </tr>
+          {items.map((item: IShoppingCartItem, idx: number) => {
+            return renderRow(item, idx);
+          })}
         </tbody>
       </table>
-      <div className="total">Total: 201$</div>
+      <div className="total">{total}</div>
     </>
   );
 };
 
-export default ShoppingCartTable;
+const mapStateToProps = ({
+  cartItems,
+  orderTotal,
+}: {
+  cartItems: Array<IShoppingCartItem>;
+  orderTotal: number;
+}) => {
+  return {
+    items: cartItems,
+    total: orderTotal,
+  };
+};
+
+const mapDispatchToProps = () => {
+  return {
+    onIncrease: (id: number) => {
+      console.log(`Increase ${id}`);
+    },
+    onDecrease: (id: number) => {
+      console.log(`Decrease ${id}`);
+    },
+    onDelete: (id: number) => {
+      console.log(`Delete ${id}`);
+    },
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(ShoppingCartTable);
