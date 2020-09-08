@@ -8,7 +8,7 @@ export default class BookstoreService implements IBookStoreService {
       id: 1,
       price: '10$',
       coverImage:
-        'https://lh3.googleusercontent.com/proxy/UQftiRT9zNVcy802FEL2Aa0Y_xnInR-fI8XiYeLTcsx9ci8-VfFjKqcpjLiVXATqaV5ac1GKZz0fyjTA5PLpClXBVvzv0lSJvqI_TBFj1QfMp84dgsk7xCKr-So1jTeVckPC0qGP',
+        'https://www.google.com/url?sa=i&url=https%3A%2F%2Fknigamir.com%2Fcatalog%2Ftekhnicheskaya-i-biznes-literatura_ID36%2Fnovaya-bolshaya-kniga-css_ID609230%2F&psig=AOvVaw3grxmUcerxXnGT1LNi0jas&ust=1599637035478000&source=images&cd=vfe&ved=0CAIQjRxqFwoTCPDm77uG2esCFQAAAAAdAAAAABAP',
     },
     {
       name: 'Decide algorithms',

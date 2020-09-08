@@ -9,7 +9,7 @@ import withBookStoreService from '../hoc';
 // Interfaces
 import IBook from '../../interfaces/book.interface';
 import IState from '../../interfaces/i-state.interface';
-import { IBookstoreServiceProp } from '../../interfaces';
+import { IAction, IBookstoreServiceProp } from '../../interfaces';
 
 // Components
 import BookListItem from '../book-list-item';
@@ -21,32 +21,17 @@ import { booksLoaded, booksRequested, booksError } from '../../actions';
 import './book-list.scss';
 import ErrorIndicator from '../error-indicator';
 
-interface IBookLoaded {
-  booksLoaded: (newBooks: Array<IBook>) => void;
+interface IFetchBooks {
+  fetchBooks: () => void;
 }
 
-interface IBookRequested {
-  booksRequested: () => void;
-}
+type Props = IState & IBookstoreServiceProp & IFetchBooks;
 
-interface IBookError {
-  booksError: (err: Error) => void;
-}
-
-type Props = IState & IBookstoreServiceProp & IBookLoaded & IBookRequested & IBookError;
-
-class BookList extends Component<Props> {
+class BookList extends Component<Props & IFetchBooks> {
   public componentDidMount(): void {
-    const { bookStoreService, booksLoaded, booksRequested, booksError } = this.props;
-    if (bookStoreService) {
-      booksRequested();
-      bookStoreService
-        .getBooks()
-        .then((data) => {
-          booksLoaded(data);
-        })
-        .catch((err: Error) => booksError(err));
-    }
+    const { fetchBooks } = this.props;
+    console.log(fetchBooks);
+    fetchBooks();
   }
 
   public render(): ReactElement {
@@ -91,7 +76,23 @@ const mapStateToProps = ({
   error,
 });
 
-const mapDispatchToProps = { booksLoaded, booksRequested, booksError };
+const mapDispatchToProps = (
+  dispatch: (action: IAction) => IAction,
+  ownProps: IBookstoreServiceProp
+) => {
+  const { bookStoreService } = ownProps;
+  return {
+    fetchBooks: (): void => {
+      dispatch(booksRequested());
+      if (bookStoreService) {
+        bookStoreService
+          .getBooks()
+          .then((data: Array<IBook>) => dispatch(booksLoaded(data)))
+          .catch((error: Error) => booksError(error));
+      }
+    },
+  };
+};
 
 export default compose<ComponentType>(
   withBookStoreService(),
