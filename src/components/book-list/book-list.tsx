@@ -8,7 +8,7 @@ import withBookStoreService from '../hoc';
 
 // Interfaces
 import IBook from '../../interfaces/book.interface';
-import IState from '../../interfaces/i-state.interface';
+import { IBookList } from '../../interfaces';
 import { IAction, IBookstoreServiceProp } from '../../interfaces';
 
 // Components
@@ -26,7 +26,7 @@ interface IFetchBooks {
   onAddedToCart: () => void;
 }
 
-type Props = IState & IBookstoreServiceProp & IFetchBooks;
+type Props = IBookList & IBookstoreServiceProp & IFetchBooks;
 
 class BookListContainer extends Component<Props & IFetchBooks> {
   public componentDidMount(): void {
@@ -76,19 +76,13 @@ const BooksList = ({
   </ul>
 );
 
-const mapStateToProps = ({
-  books,
-  loading,
-  error,
-}: {
-  books: Array<IBook>;
-  loading: boolean;
-  error: null | Error;
-}) => ({
-  books,
-  loading,
-  error,
-});
+const mapStateToProps = ({ bookList }: { bookList: IBookList }) => {
+  return {
+    books: bookList.books,
+    loading: bookList.loading,
+    error: bookList.error,
+  };
+};
 
 const mapDispatchToProps = (
   dispatch: (action: IAction) => IAction,

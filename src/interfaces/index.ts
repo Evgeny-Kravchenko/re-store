@@ -1,5 +1,5 @@
 import IErrorBoundryState from './error-boundry.interface';
-import IState from './i-state.interface';
+import { IState, IBookList, IShoppingCart } from './i-state.interface';
 import IAction from './action.interface';
 import IBook from './book.interface';
 import IBookStoreService from './bookstore-service.interface';
@@ -18,4 +18,6 @@ export {
   IBookListItemProps,
   IShoppingCartItem,
   IPropsShoppingCartTable,
+  IBookList,
+  IShoppingCart,
 };
