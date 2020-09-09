@@ -4,6 +4,8 @@ import { connect } from 'react-redux';
 import './shopping-cart-table.scss';
 import { IShoppingCartItem, IPropsShoppingCartTable } from '../../interfaces';
 
+import { bookDeleteFromCart, bookDecreaseFromCart, bookAddedToCart } from '../../actions';
+
 const ShoppingCartTable: ComponentType<IPropsShoppingCartTable> = (
   props: IPropsShoppingCartTable
 ): ReactElement => {
@@ -71,18 +73,10 @@ const mapStateToProps = ({
   };
 };
 
-const mapDispatchToProps = () => {
-  return {
-    onIncrease: (id: number) => {
-      console.log(`Increase ${id}`);
-    },
-    onDecrease: (id: number) => {
-      console.log(`Decrease ${id}`);
-    },
-    onDelete: (id: number) => {
-      console.log(`Delete ${id}`);
-    },
-  };
+const mapDispatchToProps = {
+  onIncrease: bookAddedToCart,
+  onDecrease: bookDecreaseFromCart,
+  onDelete: bookDeleteFromCart,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(ShoppingCartTable);

@@ -79,6 +79,34 @@ const reducer = (state: IState = initialState, action: IAction): IState => {
         cartItems: updateCartItems(suchBookInCart, book, state.cartItems),
       };
     }
+    case 'BOOK_REMOVE_FROM_CART': {
+      const id: number = action.payload;
+      const newItems: Array<IShoppingCartItem | undefined> = state.cartItems.filter(
+        (book: IShoppingCartItem | undefined) => book?.id !== id
+      );
+      return {
+        ...state,
+        cartItems: newItems,
+      };
+    }
+    case 'BOOK_DECREASE_FROM_CART': {
+      const bookId = action.payload;
+      return {
+        ...state,
+        cartItems: state.cartItems
+          .map((item: IShoppingCartItem | undefined) => {
+            if (item) {
+              const { id, total, count } = item;
+              if (id === bookId) {
+                item.total = total - total / count;
+                item.count = count - 1;
+              }
+            }
+            return item;
+          })
+          .filter((item: IShoppingCartItem | undefined) => item?.count !== 0),
+      };
+    }
     default: {
       return state;
     }
