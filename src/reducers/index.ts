@@ -10,6 +10,32 @@ const initialState: IState = {
   orderTotal: 500,
 };
 
+const updateCartItems = (
+  existingBook: IShoppingCartItem | undefined,
+  book: IBook | undefined,
+  cartItems: Array<IShoppingCartItem | undefined>
+): Array<IShoppingCartItem | undefined> => {
+  if (book) {
+    if (existingBook) {
+      return cartItems.map((item: IShoppingCartItem | undefined) => {
+        if (item && item.id === existingBook.id) {
+          item.total = Number((item?.total + book.price).toFixed(2));
+          item.count = item?.count + 1;
+        }
+        return item;
+      });
+    }
+    const newItem: IShoppingCartItem = {
+      id: book.id,
+      title: book.name,
+      total: book.price,
+      count: 1,
+    };
+    return [...cartItems, newItem];
+  }
+  return [];
+};
+
 const reducer = (state: IState = initialState, action: IAction): IState => {
   switch (action.type) {
     case 'FETCH_BOOKS_SUCCESS': {
@@ -43,18 +69,14 @@ const reducer = (state: IState = initialState, action: IAction): IState => {
           return item;
         }
       });
-      let newItem: IShoppingCartItem | undefined;
-      if (book) {
-        newItem = {
-          id: book.id,
-          title: book.name,
-          total: book.price,
-          count: 1,
-        };
-      }
+      const suchBookInCart: IShoppingCartItem | undefined = state.cartItems.find(
+        (bookInCart: IShoppingCartItem | undefined) => {
+          return bookInCart?.id === book?.id;
+        }
+      );
       return {
         ...state,
-        cartItems: [...state.cartItems, newItem],
+        cartItems: updateCartItems(suchBookInCart, book, state.cartItems),
       };
     }
     default: {
