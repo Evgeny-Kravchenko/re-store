@@ -4,12 +4,12 @@ import { connect } from 'react-redux';
 import './shopping-cart-table.scss';
 import { IShoppingCartItem, IPropsShoppingCartTable } from '../../interfaces';
 
-import { bookDeleteFromCart } from '../../actions';
+import { bookDeleteFromCart, bookDecreaseFromCart, bookAddedToCart } from '../../actions';
 
 const ShoppingCartTable: ComponentType<IPropsShoppingCartTable> = (
   props: IPropsShoppingCartTable
 ): ReactElement => {
-  const { items, total, onIncrease, onDecrease, bookDeleteFromCart } = props;
+  const { items, total, onIncrease, onDecrease, onDelete } = props;
   const renderRow = (item: IShoppingCartItem, idx: number) => {
     const {
       id,
@@ -24,7 +24,7 @@ const ShoppingCartTable: ComponentType<IPropsShoppingCartTable> = (
         <td scope="col">{count}</td>
         <td scope="col">{total}</td>
         <td scope="col">
-          <button className="btn btn-outline-danger" onClick={() => bookDeleteFromCart(id)}>
+          <button className="btn btn-outline-danger" onClick={() => onDelete(id)}>
             <i className="fa fa-trash-o"></i>
           </button>
           <button className="btn btn-outline-success" onClick={() => onIncrease(id)}>
@@ -74,13 +74,9 @@ const mapStateToProps = ({
 };
 
 const mapDispatchToProps = {
-  onIncrease: (id: number) => {
-    console.log(`Increase ${id}`);
-  },
-  onDecrease: (id: number) => {
-    console.log(`Decrease ${id}`);
-  },
-  bookDeleteFromCart,
+  onIncrease: bookAddedToCart,
+  onDecrease: bookDecreaseFromCart,
+  onDelete: bookDeleteFromCart,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(ShoppingCartTable);
