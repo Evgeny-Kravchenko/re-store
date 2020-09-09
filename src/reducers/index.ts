@@ -45,12 +45,34 @@ const reducer = (state: IState = initialState, action: IAction): IState => {
       });
       let newItem: IShoppingCartItem | undefined;
       if (book) {
+        const suchBookInCart: IShoppingCartItem | undefined = state.cartItems.find(
+          (bookInCart: IShoppingCartItem | undefined) => {
+            if (bookInCart) {
+              return bookInCart.id === book.id;
+            }
+          }
+        );
         newItem = {
           id: book.id,
           title: book.name,
           total: book.price,
           count: 1,
         };
+        if (suchBookInCart) {
+          const updatedCart: Array<IShoppingCartItem | undefined> = state.cartItems.map(
+            (item: IShoppingCartItem | undefined) => {
+              if (item && item.id === book.id) {
+                item.total = Number((item?.total + book.price).toFixed(2));
+                item.count = item?.count + 1;
+              }
+              return item;
+            }
+          );
+          return {
+            ...state,
+            cartItems: updatedCart,
+          };
+        }
       }
       return {
         ...state,
