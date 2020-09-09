@@ -7,5 +7,5 @@ export default interface IPropsShoppingCartTable {
   total: number;
   onIncrease: ActionItem;
   onDecrease: ActionItem;
-  onDelete: ActionItem;
+  bookDeleteFromCart: ActionItem;
 }

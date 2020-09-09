@@ -28,6 +28,13 @@ const bookAddedToCart = (bookId: number): IAction => {
   };
 };
 
+const bookDeleteFromCart = (bookId: number): IAction => {
+  return {
+    type: 'BOOK_REMOVE_FROM_CART',
+    payload: bookId,
+  };
+};
+
 const fetchBooks = (
   bookStoreService: IBookStoreService | undefined,
   dispatch: (action: IAction) => IAction
@@ -41,4 +48,4 @@ const fetchBooks = (
   }
 };
 
-export { booksLoaded, booksRequested, booksError, fetchBooks, bookAddedToCart };
+export { booksLoaded, booksRequested, booksError, fetchBooks, bookAddedToCart, bookDeleteFromCart };

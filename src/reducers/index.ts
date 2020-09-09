@@ -79,6 +79,16 @@ const reducer = (state: IState = initialState, action: IAction): IState => {
         cartItems: updateCartItems(suchBookInCart, book, state.cartItems),
       };
     }
+    case 'BOOK_REMOVE_FROM_CART': {
+      const id: number = action.payload;
+      const newItems: Array<IShoppingCartItem | undefined> = state.cartItems.filter(
+        (book: IShoppingCartItem | undefined) => book?.id !== id
+      );
+      return {
+        ...state,
+        cartItems: newItems,
+      };
+    }
     default: {
       return state;
     }
