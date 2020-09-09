@@ -2,7 +2,7 @@ import React, { ComponentType, ReactElement } from 'react';
 import { connect } from 'react-redux';
 
 import './shopping-cart-table.scss';
-import { IShoppingCartItem, IPropsShoppingCartTable } from '../../interfaces';
+import { IShoppingCartItem, IPropsShoppingCartTable, IShoppingCart } from '../../interfaces';
 
 import { bookDeleteFromCart, bookDecreaseFromCart, bookAddedToCart } from '../../actions';
 
@@ -10,6 +10,7 @@ const ShoppingCartTable: ComponentType<IPropsShoppingCartTable> = (
   props: IPropsShoppingCartTable
 ): ReactElement => {
   const { items, total, onIncrease, onDecrease, onDelete } = props;
+
   const renderRow = (item: IShoppingCartItem, idx: number) => {
     const {
       id,
@@ -50,8 +51,10 @@ const ShoppingCartTable: ComponentType<IPropsShoppingCartTable> = (
           </tr>
         </thead>
         <tbody>
-          {items.map((item: IShoppingCartItem, idx: number) => {
-            return renderRow(item, idx);
+          {items.map((item: IShoppingCartItem | undefined, idx: number) => {
+            if (item) {
+              return renderRow(item, idx);
+            }
           })}
         </tbody>
       </table>
@@ -60,16 +63,10 @@ const ShoppingCartTable: ComponentType<IPropsShoppingCartTable> = (
   );
 };
 
-const mapStateToProps = ({
-  cartItems,
-  orderTotal,
-}: {
-  cartItems: Array<IShoppingCartItem>;
-  orderTotal: number;
-}) => {
+const mapStateToProps = ({ shoppingCart }: { shoppingCart: IShoppingCart }) => {
   return {
-    items: cartItems,
-    total: orderTotal,
+    items: shoppingCart.cartItems,
+    total: shoppingCart.orderTotal,
   };
 };
 
