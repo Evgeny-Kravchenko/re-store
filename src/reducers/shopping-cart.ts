@@ -8,7 +8,7 @@ const updateShoppingCart = (state: IState | undefined, action: IAction): IShoppi
   if (!state) {
     return {
       cartItems: [],
-      orderTotal: 500,
+      orderTotal: 0,
     };
   }
   switch (action.type) {
@@ -24,37 +24,53 @@ const updateShoppingCart = (state: IState | undefined, action: IAction): IShoppi
           return bookInCart?.id === book?.id;
         }
       );
+      let orderTotal: number = state.shoppingCart.orderTotal;
+      if (book) {
+        orderTotal = +(state?.shoppingCart.orderTotal + book?.price).toFixed(2);
+      }
       return {
         ...state.shoppingCart,
+        orderTotal,
         cartItems: updateCartItems(suchBookInCart, book, state.shoppingCart.cartItems),
       };
     }
     case 'BOOK_REMOVE_FROM_CART': {
       const id: number = action.payload;
+      let { orderTotal }: { orderTotal: number } = state.shoppingCart;
       const newItems: Array<IShoppingCartItem | undefined> = state.shoppingCart.cartItems.filter(
-        (book: IShoppingCartItem | undefined) => book?.id !== id
+        (book: IShoppingCartItem | undefined) => {
+          if (book && book.id === id) {
+            orderTotal -= +book.total.toFixed(2);
+          }
+          return book?.id !== id;
+        }
       );
       return {
-        ...state.shoppingCart,
+        orderTotal,
         cartItems: newItems,
       };
     }
     case 'BOOK_DECREASE_FROM_CART': {
       const bookId = action.payload;
-      return {
-        ...state.shoppingCart,
-        cartItems: state.shoppingCart.cartItems
-          .map((item: IShoppingCartItem | undefined) => {
-            if (item) {
-              const { id, total, count } = item;
-              if (id === bookId) {
-                item.total = total - total / count;
-                item.count = count - 1;
-              }
+      let { orderTotal }: { orderTotal: number } = state.shoppingCart;
+      const cartItems = state.shoppingCart.cartItems
+        .map((item: IShoppingCartItem | undefined) => {
+          if (item) {
+            const { id, total, count } = item;
+            if (id === bookId) {
+              const resultTotal: number = total - total / count;
+              item.total = Number(resultTotal.toFixed(2));
+              item.count = count - 1;
+              orderTotal -= total / count;
+              orderTotal = +orderTotal.toFixed(2);
             }
-            return item;
-          })
-          .filter((item: IShoppingCartItem | undefined) => item?.count !== 0),
+          }
+          return item;
+        })
+        .filter((item: IShoppingCartItem | undefined) => item?.count !== 0);
+      return {
+        orderTotal,
+        cartItems,
       };
     }
     default: {
