@@ -26,7 +26,7 @@ const updateShoppingCart = (state: IState | undefined, action: IAction): IShoppi
       );
       let orderTotal: number = state.shoppingCart.orderTotal;
       if (book) {
-        orderTotal = +(state?.shoppingCart.orderTotal + book?.price).toFixed(2);
+        orderTotal = Number((state?.shoppingCart.orderTotal + book?.price).toFixed(2));
       }
       return {
         ...state.shoppingCart,
@@ -40,7 +40,7 @@ const updateShoppingCart = (state: IState | undefined, action: IAction): IShoppi
       const newItems: Array<IShoppingCartItem | undefined> = state.shoppingCart.cartItems.filter(
         (book: IShoppingCartItem | undefined) => {
           if (book && book.id === id) {
-            orderTotal -= +book.total.toFixed(2);
+            orderTotal = Number((orderTotal - book.total).toFixed(2));
           }
           return book?.id !== id;
         }
@@ -62,7 +62,7 @@ const updateShoppingCart = (state: IState | undefined, action: IAction): IShoppi
               item.total = Number(resultTotal.toFixed(2));
               item.count = count - 1;
               orderTotal -= total / count;
-              orderTotal = +orderTotal.toFixed(2);
+              orderTotal = Number(orderTotal.toFixed(2));
             }
           }
           return item;
