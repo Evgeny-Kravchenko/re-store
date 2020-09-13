@@ -2,6 +2,9 @@ import React, { ComponentType, ReactElement } from 'react';
 import { Link } from 'react-router-dom';
 
 import './header.scss';
+import { IShoppingCart } from '../../interfaces';
+import { connect } from 'react-redux';
+import { compose } from 'redux';
 
 interface IHeaderProps {
   numberItems: number;
@@ -31,4 +34,11 @@ const Header: ComponentType<IHeaderProps> = (props: IHeaderProps): ReactElement 
   );
 };
 
-export default Header;
+const mapStateToProps = ({ shoppingCart }: { shoppingCart: IShoppingCart }) => {
+  return {
+    total: shoppingCart.orderTotal,
+    numberItems: shoppingCart.cartItems.length,
+  };
+};
+
+export default compose(connect(mapStateToProps))(Header);
